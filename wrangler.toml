@@ -1,0 +1,12 @@
+name = "ai-image-generator"
+main = "src/worker.js"
+compatibility_date = "2024-09-23"
+
+# No gradual-rollout/versioning workflow here, so skip per-deployment
+# Preview URLs rather than leaving the default (implicitly-enabled) behavior.
+preview_urls = false
+
+# Workers AI binding: exposes env.AI in src/worker.js, giving access to
+# the Workers AI model catalog (text-to-image models included).
+[ai]
+binding = "AI"

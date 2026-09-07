@@ -1,0 +1,68 @@
+<svg width="300" height="1200" viewBox="0 0 300 1200" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Bob character</title>
+<desc>Full-body anime illustration of a bald 57-year-old man with glasses, a wild white beard, a black hoodie, jeans, and sneakers, on an empty background.</desc>
+
+<!-- shoes -->
+<rect x="70" y="1108" width="78" height="12" rx="6" fill="#e8e8e8"/>
+<rect x="74" y="1075" width="70" height="40" rx="16" fill="#141414"/>
+<rect x="152" y="1108" width="78" height="12" rx="6" fill="#e8e8e8"/>
+<rect x="156" y="1075" width="70" height="40" rx="16" fill="#141414"/>
+
+<!-- legs (jeans) -->
+<rect x="70" y="622" width="160" height="14" rx="4" fill="#2c4364"/>
+<path d="M70,630 L145,630 L133,1075 L85,1075 Z" fill="#3f5c82"/>
+<path d="M155,630 L230,630 L215,1075 L167,1075 Z" fill="#3f5c82"/>
+<line x1="72" y1="635" x2="87" y2="1070" stroke="#2c4364" stroke-width="2"/>
+<line x1="143" y1="635" x2="132" y2="1070" stroke="#2c4364" stroke-width="2"/>
+<line x1="228" y1="635" x2="213" y2="1070" stroke="#2c4364" stroke-width="2"/>
+<line x1="157" y1="635" x2="168" y2="1070" stroke="#2c4364" stroke-width="2"/>
+
+<!-- arm sleeves (behind torso at the shoulder seam) -->
+<path d="M20,225 L70,232 L60,605 L30,600 Z" fill="#1c1c1e"/>
+<path d="M280,225 L230,232 L240,605 L270,600 Z" fill="#1c1c1e"/>
+
+<!-- hood collar (behind neckline) -->
+<ellipse cx="150" cy="215" rx="55" ry="25" fill="#3a3a3c"/>
+
+<!-- torso (hoodie) -->
+<path d="M75,220 Q55,230 55,260 L45,610 Q45,635 70,640 L230,640 Q255,635 255,610 L245,260 Q245,230 225,220 L165,220 Q150,235 135,220 Z" fill="#1c1c1e"/>
+<line x1="150" y1="225" x2="150" y2="620" stroke="#3a3a3c" stroke-width="4"/>
+<rect x="95" y="480" width="110" height="50" rx="14" fill="none" stroke="#3a3a3c" stroke-width="4"/>
+<line x1="130" y1="235" x2="126" y2="290" stroke="#3a3a3c" stroke-width="4" stroke-linecap="round"/>
+<line x1="170" y1="235" x2="174" y2="290" stroke="#3a3a3c" stroke-width="4" stroke-linecap="round"/>
+<circle cx="126" cy="292" r="5" fill="#3a3a3c"/>
+<circle cx="174" cy="292" r="5" fill="#3a3a3c"/>
+
+<!-- cuffs + hands (drawn in front so they clear the torso's flared hem) -->
+<rect x="28" y="585" width="32" height="18" rx="6" fill="#3a3a3c"/>
+<ellipse cx="35" cy="622" rx="17" ry="21" fill="#f0c39a"/>
+<rect x="240" y="585" width="32" height="18" rx="6" fill="#3a3a3c"/>
+<ellipse cx="265" cy="622" rx="17" ry="21" fill="#f0c39a"/>
+
+<!-- neck -->
+<rect x="130" y="195" width="40" height="45" rx="8" fill="#f0c39a"/>
+
+<!-- head -->
+<ellipse cx="80" cy="140" rx="14" ry="20" fill="#f0c39a"/>
+<ellipse cx="220" cy="140" rx="14" ry="20" fill="#f0c39a"/>
+<circle cx="150" cy="130" r="72" fill="#f0c39a"/>
+<ellipse cx="130" cy="80" rx="30" ry="14" fill="#ffffff" opacity="0.2"/>
+
+<!-- face -->
+<line x1="100" y1="112" x2="130" y2="108" stroke="#d8d6cc" stroke-width="5" stroke-linecap="round"/>
+<line x1="170" y1="108" x2="200" y2="112" stroke="#d8d6cc" stroke-width="5" stroke-linecap="round"/>
+<rect x="95" y="120" width="45" height="30" rx="8" fill="none" stroke="#222222" stroke-width="6"/>
+<rect x="160" y="120" width="45" height="30" rx="8" fill="none" stroke="#222222" stroke-width="6"/>
+<line x1="140" y1="135" x2="160" y2="135" stroke="#222222" stroke-width="6"/>
+<line x1="95" y1="128" x2="78" y2="122" stroke="#222222" stroke-width="6" stroke-linecap="round"/>
+<line x1="205" y1="128" x2="222" y2="122" stroke="#222222" stroke-width="6" stroke-linecap="round"/>
+<circle cx="117" cy="135" r="4" fill="#2a2a2a"/>
+<circle cx="182" cy="135" r="4" fill="#2a2a2a"/>
+<path d="M150,140 L145,160 L155,160 Z" fill="#dba876"/>
+
+<!-- beard -->
+<path d="M110,170 L95,220 L120,215 L100,270 L130,260 L110,330 L140,320 L120,390 L150,430 L180,390 L160,320 L190,330 L170,260 L200,270 L180,215 L205,220 L190,170 Q150,195 110,170 Z" fill="#f5f4f0"/>
+<path d="M120,200 Q110,300 130,400" fill="none" stroke="#dcdad2" stroke-width="3" stroke-linecap="round"/>
+<path d="M150,210 Q150,320 150,420" fill="none" stroke="#dcdad2" stroke-width="3" stroke-linecap="round"/>
+<path d="M180,200 Q190,300 170,400" fill="none" stroke="#dcdad2" stroke-width="3" stroke-linecap="round"/>
+</svg>

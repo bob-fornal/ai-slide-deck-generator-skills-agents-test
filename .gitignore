@@ -1,0 +1,14 @@
+# Secrets / local config
+.env
+.dev.vars
+
+# Node / Cloudflare Workers tooling
+node_modules/
+.wrangler/
+
+# Generated output images
+generated_image*.png
+generated_image*.jpg
+
+# OS
+.DS_Store
