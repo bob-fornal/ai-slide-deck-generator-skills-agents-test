@@ -125,6 +125,27 @@ export default {
       params.image = Array.from(binary);
     }
 
+    // DIAGNOSTIC ONLY — never set by the generate-image Skill or any Agent.
+    // Forwards images[0] under the caller-specified field name to WHATEVER
+    // model was requested, bypassing the IMG2IMG_MODEL restriction above.
+    // Exists solely so scripts/test-reference-image.js can determine, for an
+    // arbitrary model, whether that model's docs (or Cloudflare's shared
+    // schema template, which many text-to-image models list identically
+    // regardless of actual capability) can be trusted. Real callers should
+    // never need this: the production contract is already correct, and
+    // sending an unsupported field to a model can 502 loudly (as
+    // stable-diffusion-xl-base-1.0 does) rather than being ignored quietly.
+    if (Array.isArray(body.images) && typeof body.images[0] === "string" && typeof body.imageField === "string") {
+      if (body.imageField === "image_b64") {
+        params.image_b64 = body.images[0];
+      } else if (body.imageField === "image") {
+        const binary = Uint8Array.from(atob(body.images[0]), (c) => c.charCodeAt(0));
+        params.image = Array.from(binary);
+      } else {
+        return new Response(`Unsupported imageField: ${body.imageField} (expected "image" or "image_b64")`, { status: 400 });
+      }
+    }
+
     let result;
     try {
       result = await env.AI.run(model, params);

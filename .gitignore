@@ -10,5 +10,9 @@ node_modules/
 generated_image*.png
 generated_image*.jpg
 
+# Local output from scripts/test-reference-image.js — regenerate as needed,
+# don't commit (can contain arbitrary reference images passed in via --reference).
+test-output/
+
 # OS
 .DS_Store

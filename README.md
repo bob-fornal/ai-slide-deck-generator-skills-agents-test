@@ -27,9 +27,17 @@ See [PRD.md](PRD.md) for the full product/requirements writeup.
   come from (fixed, caller-required, or chosen from a fixed list — see
   [PRD.md §12](PRD.md#12-stage-2-skill--three-agents--reference-images)).
 - `.env` / `.env.example` — local config. `.env` is gitignored; never commit it.
+- `scripts/test-reference-image.js` — diagnostic tool: calls a given model
+  twice (same prompt/seed, with vs. without a reference image) and saves
+  both outputs to `test-output/` (gitignored) so the result can be verified
+  by eye, not just by status code. See [scripts/README.md](scripts/README.md)
+  for full usage, and
+  [docs/stage-2/06-reference-image-investigation.md](docs/stage-2/06-reference-image-investigation.md)
+  for what it found.
 
-There is no local client script — Claude (or any HTTP client, e.g. `curl`)
-calls the deployed Worker directly.
+There is no local client script for normal generation — Claude (or any HTTP
+client, e.g. `curl`) calls the deployed Worker directly. `scripts/` holds
+test/diagnostic tooling only.
 
 ## Setup
 

@@ -201,12 +201,16 @@ the local `.env` variable names changed.
   entirely, since stable-diffusion-xl caps at 2048px per side)?
 - **img2img — three possible unblocks, one actionable now**: a follow-up
   investigation (see
-  [docs/stage-2/06-reference-image-investigation.md](docs/stage-2/06-reference-image-investigation.md))
+  [docs/stage-2/06-reference-image-investigation.md](docs/stage-2/06-reference-image-investigation.md),
+  using [scripts/test-reference-image.js](scripts/test-reference-image.js))
   tested every accessible Workers AI Text-to-Image model against a real
-  reference image and a same-seed control, and found that
-  `stable-diffusion-xl-lightning` and `dreamshaper-8-lcm` also fail to
-  condition on a reference image despite returning `200` — visually
-  confirmed, not just status-code-confirmed. Three paths forward, not two:
+  reference image and a same-seed control. `stable-diffusion-xl-lightning`
+  fails with the identical missing-image-tensor error as sdxl-base;
+  `dreamshaper-8-lcm` is the one genuinely interesting case — it has a real
+  `image` tensor, but rejects the shape this project sends (`Expected [1],
+  got [1,217768]`), a narrower, potentially fixable gap worth revisiting on
+  its own. None of the four accessible models tested produced a single
+  successful reference-conditioned image. Three paths forward, not two:
   (1) implement multipart request support for `@cf/black-forest-labs/flux-2-dev`,
   which explicitly advertises multi-reference support and *is* accessible on
   this account — the only one of the three that's actionable without waiting
@@ -410,15 +414,25 @@ both counts and pass through unchanged.
     contract (forward `images[0]` as `image` only for the img2img model);
     nothing here is a code defect to fix, only a platform/account gate to
     resolve (§9).
-- ✅ **Broader model survey completed**: every accessible model in the
+- ✅ **Broader model survey completed, with a dedicated test tool**: every
+  accessible model in the
   [Workers AI Text-to-Image catalog](https://developers.cloudflare.com/workers-ai/models/?tasks=Text-to-Image)
-  (11 models as of this writing) was tested live for access and, where
-  relevant, for genuine reference-image conditioning (not just a non-error
-  response — see the visual same-seed comparisons in
-  [docs/stage-2/06-reference-image-investigation.md](docs/stage-2/06-reference-image-investigation.md)).
-  Two more models (`stable-diffusion-xl-lightning`, `dreamshaper-8-lcm`)
-  were found to accept an `image`/`image_b64` field without erroring while
-  not actually conditioning on it. `@cf/black-forest-labs/flux-2-dev`
+  (11 models as of this writing) was tested live for access, and — using
+  [scripts/test-reference-image.js](scripts/test-reference-image.js), which
+  forwards a real reference image via a diagnostic `imageField` flag in
+  `src/worker.js` and saves both a with- and without-reference output
+  locally — for genuine reference-image conditioning, not just a non-error
+  response. An earlier ad-hoc version of this same test had a real bug (it
+  sent fields the deployed Worker didn't yet forward for arbitrary models,
+  so the reference image never reached any model); corrected results:
+  `stable-diffusion-xl-lightning` fails identically to sdxl-base (missing
+  image tensor), and `dreamshaper-8-lcm` — the one case worth a closer
+  look — has a genuine `image` tensor but rejects the shape sent
+  (`Expected [1], got [1,217768]`). Every accessible model's
+  reference-image attempt failed before generating anything; only the
+  no-reference controls produced real images (see
+  [docs/stage-2/06-reference-image-investigation.md](docs/stage-2/06-reference-image-investigation.md)
+  for the full, corrected results). `@cf/black-forest-labs/flux-2-dev`
   emerged as the strongest lead for real reference-image support (see §9),
   and `@cf/leonardo/lucid-origin` as a worthwhile sdxl alternative for
   general sized text-to-image generation (§9, next-steps doc).

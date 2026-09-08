@@ -92,3 +92,25 @@ silently ignored, matching how an unsupported `width`/`height` was already
 handled. Every layer that surfaces this to a caller (Skill,
 `item-generator`, `scene-generator`, `character-generator`) says plainly
 that reference images don't currently work, rather than implying they do.
+
+### The `imageField` diagnostic escape hatch
+
+Testing "does model X actually use a reference image" for models *other*
+than the one production model above requires forwarding the image to them
+too — but doing that unconditionally in production would reintroduce the
+exact failure mode the gate above prevents (some models, like sdxl-base,
+hard-`502` on an unrecognized image field instead of ignoring it). The
+Worker instead accepts an explicit, undocumented-to-callers `imageField`
+body field (`"image"` or `"image_b64"`): when present alongside `images`,
+it forwards `images[0]` under that exact field name to *whatever* `model`
+was requested, bypassing the gate. The generate-image Skill and all three
+Agents never set this field — only
+[scripts/test-reference-image.js](../../scripts/test-reference-image.js)
+does, deliberately, to answer "does this specific model's documented image
+input actually work" without touching the production contract (usage:
+[scripts/README.md](../../scripts/README.md)). See
+[06-reference-image-investigation.md](06-reference-image-investigation.md)
+for what it found, including a real bug in an earlier, ad-hoc version of
+this same test (it sent fields the Worker didn't yet forward for arbitrary
+models, so the reference image never reached the model at all — corrected
+once `imageField` existed to do this properly).
