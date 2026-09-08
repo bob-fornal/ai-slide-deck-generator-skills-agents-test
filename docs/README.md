@@ -11,11 +11,19 @@ the build — not just the current end state.
   Worker → Workers AI → real image bytes, with the `/generate-image` slash
   command and the first reference character asset. See
   [stage-1/README.md](stage-1/README.md) for the full write-up.
+- [stage-2/](stage-2/) — Convert that slash command into a reusable
+  `generate-image` Skill, add three Agents (`character-generator`,
+  `item-generator`, `scene-generator`) that call it, and add reference-image
+  (img2img) support plus confirmed size-clamping to the Worker. Deployed and
+  verified live: size handling genuinely works; reference-image conditioning
+  is correctly implemented but blocked by an external Cloudflare platform/
+  account limitation, not by anything in this project — see
+  [stage-2/05-next-steps.md](stage-2/05-next-steps.md). Full write-up:
+  [stage-2/README.md](stage-2/README.md).
 
-Future stages get their own `stage-N/` folder alongside this one (e.g.
-`stage-2/` for promoting the current logic into a formal Claude Skill), each
-with its own `README.md` as the entry point. Add a line above per new stage
-as it's written.
+Future stages get their own `stage-N/` folder alongside this one, each with
+its own `README.md` as the entry point. Add a line above per new stage as
+it's written.
 
 For the authoritative, stage-agnostic requirements doc, see
 [../PRD.md](../PRD.md).
