@@ -145,3 +145,9 @@ reference-image options appear to be ignored.
 - See [docs/README.md](docs/README.md) for the full stage-by-stage
   write-up, including `docs/stage-2/` for this stage's build log and
   lessons learned.
+
+## Moving to a different Cloudflare account
+
+See [docs/account-migration.md](docs/account-migration.md) for the full
+runbook — including why model access itself may not carry over, and needs
+re-verifying rather than assumed.

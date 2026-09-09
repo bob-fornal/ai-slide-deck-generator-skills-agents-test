@@ -70,7 +70,7 @@ export default {
   async fetch(request, env) {
     if (request.method !== "POST") {
       return new Response(
-        "Method Not Allowed. POST a JSON body: { prompt, model?, width?, height?, images? }",
+        "Method Not Allowed. POST a JSON body: { prompt, model?, width?, height?, seed?, images? }",
         { status: 405 }
       );
     }
@@ -111,6 +111,16 @@ export default {
       params.width = clampSingleDimension(body.width);
     } else if (Number.isFinite(body.height)) {
       params.height = clampSingleDimension(body.height);
+    }
+
+    // seed: optional integer, forwarded as-is to whatever model was
+    // requested. Every text-to-image model on Workers AI accepts a seed to
+    // make its random noise deterministic; without one, each call draws
+    // fresh randomness, so identical prompts can produce different images
+    // (and, for models with an output-side safety checker, different
+    // pass/fail verdicts) from one request to the next.
+    if (Number.isFinite(body.seed)) {
+      params.seed = body.seed;
     }
 
     // images: optional array of base64-encoded reference images, for

@@ -41,6 +41,25 @@ and must be stripped out of the prompt text before sending it:
   `1448x2048` rather than erroring. Mention this to the caller whenever the
   requested size falls outside 256–2048 on either side, or isn't already a
   multiple of 8.
+- `--seed=N` — an integer forwarded as-is to the model. **Confirmed live:
+  flux rejects this the same way it rejects `--size`** — a hard `5006`
+  error (`Additional or unevaluated properties '/seed'`), despite
+  Cloudflare's own docs listing `seed` as a flux parameter (same
+  docs-vs-reality gap as sdxl's `image`/`image_b64`; see `--image` below).
+  If `--seed` is passed with `--type=jpeg`/flux, tell the caller it will be
+  rejected, but still send the request. For models that do accept it
+  (sdxl, sdxl-lightning, dreamshaper, the Leonardo models), **live testing
+  found it does *not* reliably make output deterministic** — the same
+  seed, prompt, model, and size produced different images (different
+  checksums, different pixel content) across repeated calls for
+  `stable-diffusion-xl-base-1.0` and `stable-diffusion-xl-lightning`. It
+  had no effect at all (identical solid-black output regardless of seed)
+  on `dreamshaper-8-lcm`, and no effect on Leonardo's NSFW prompt filter
+  (which runs pre-generation, before any seed/noise is involved). Pass it
+  when a caller explicitly wants to try pinning a result, but don't expect
+  it to fix the flaky/black-output failure modes documented in
+  `characters/model-comparison*.md`. Optional; omit `seed` from the
+  request body entirely if not given.
 - `--filename=path` — where to save the resulting image locally. If
   omitted, derive one as `generated-<unix-timestamp>.<ext>`, where `<ext>`
   is `jpg` for the jpeg/flux path or `png` for the png/sdxl path. If the
@@ -92,11 +111,12 @@ the user for one — don't call the API with an empty prompt.
    Worker's own secret, `CLOUDFLARE_API_TOKEN` (unprefixed, set via
    `wrangler secret put` — see step 4).
 2. Build the JSON body: `{ "prompt": ..., "model": ..., "width"?: ...,
-   "height"?: ..., "images"?: [...] }` (omit `width`/`height` entirely if
-   no `--size` was given; omit `images` entirely if no `--image` was
-   given). Build this safely (e.g. via a small `node -e` one-liner using
-   `JSON.stringify`, or a heredoc) rather than hand-splicing the prompt
-   string or base64 blobs into JSON.
+   "height"?: ..., "seed"?: ..., "images"?: [...] }` (omit `width`/`height`
+   entirely if no `--size` was given; omit `seed` entirely if no `--seed`
+   was given; omit `images` entirely if no `--image` was given). Build this
+   safely (e.g. via a small `node -e` one-liner using `JSON.stringify`, or
+   a heredoc) rather than hand-splicing the prompt string or base64 blobs
+   into JSON.
 3. POST it:
    ```
    curl -s -D <headers-tmpfile> -o <output-path> -X POST "$PROD_CLOUDFLARE_WORKER_URL" \

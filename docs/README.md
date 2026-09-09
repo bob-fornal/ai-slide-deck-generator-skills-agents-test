@@ -25,5 +25,13 @@ Future stages get their own `stage-N/` folder alongside this one, each with
 its own `README.md` as the entry point. Add a line above per new stage as
 it's written.
 
+## Operational guides
+
+Not every doc here is a stage write-up — some are runbooks for things that
+need doing regardless of which stage the project is in:
+
+- [account-migration.md](account-migration.md) — moving the deployed Worker
+  (and everything that depends on it) to a different Cloudflare account.
+
 For the authoritative, stage-agnostic requirements doc, see
 [../PRD.md](../PRD.md).
